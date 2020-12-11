@@ -1,0 +1,59 @@
+{
+  "name": "mutil-build",
+  "version": "1.0.0",
+  "description": "multi build",
+  "main": "index.js",
+  "repository": "https://github.com/192114",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development webpack serve --config ./scripts/config/webpack.dev.js",
+    "build": "cross-env NODE_ENV=production webpack --config ./scripts/config/webpack.prod.js"
+  },
+  "keywords": [],
+  "author": "liar",
+  "license": "MIT",
+  "browserslist": {
+    "development": [
+      "last 1 version",
+      "not IE 11"
+    ],
+    "production": [
+      "defaults",
+      "not IE 11"
+    ]
+  },
+  "dependencies": {
+    "@babel/runtime-corejs3": "^7.12.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-react": "^7.12.10",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.0.1",
+    "css-minimizer-webpack-plugin": "^1.1.5",
+    "file-loader": "^6.2.0",
+    "glob": "^7.1.6",
+    "html-webpack-plugin": "^5.0.0-alpha.15",
+    "less": "^3.12.2",
+    "less-loader": "^7.1.0",
+    "mini-css-extract-plugin": "^1.3.3",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^4.1.0",
+    "postcss-normalize": "^9.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "purgecss-webpack-plugin": "^3.0.0",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.10.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^4.0.0-beta.0",
+    "webpack-merge": "^5.5.0",
+    "webpackbar": "^5.0.0-3"
+  }
+}
