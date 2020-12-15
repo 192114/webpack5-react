@@ -147,20 +147,17 @@ module.exports = {
           useShortDoctype: true,
         },
     }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     {
-    //       context: resolve(PROJECT_PATH, './public'),
-    //       from: '*',
-    //       to: resolve(PROJECT_PATH, './dist'),
-    //       toType: 'dir',
-    //     },
-    //   ],
-    // }),
-    new WebpackBar({
-      name: isDev ? '正在启动' : '正在打包',
-      color: '#fa8c16',
+    new CopyPlugin({
+      patterns: [
+        {
+          context: resolve(PROJECT_PATH, './public'),
+          from: '*',
+          to: resolve(PROJECT_PATH, './dist'),
+          toType: 'dir',
+        },
+      ],
     }),
+    new WebpackBar(),
     new webpack.ids.DeterministicModuleIdsPlugin({
       maxLength: 5
     }),

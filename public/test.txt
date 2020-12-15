@@ -1,0 +1,1 @@
+由于copy-webpack-plugin public下需要有文件 否则[webpack-dev-middleware] ERROR in unable to locate '/Users/shadowsun/workspace/webpack5-react/public/*' glob
