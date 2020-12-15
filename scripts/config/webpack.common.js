@@ -126,9 +126,10 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: resolve(PROJECT_PATH, './public/index.html'),
+      template: resolve(PROJECT_PATH, './templates/index.html'),
       filename: 'index.html',
       cache: false, // 特别重要：防止之后使用v6版本 copy-webpack-plugin 时代码修改一刷新页面为空问题。
+      inject: 'body',
       minify: isDev
         ? false
         : {
@@ -146,21 +147,16 @@ module.exports = {
           useShortDoctype: true,
         },
     }),
-    new CopyPlugin({
-      patterns: [
-        {
-          context: resolve(PROJECT_PATH, './public'),
-          from: '*',
-          to: resolve(PROJECT_PATH, './dist'),
-          toType: 'dir',
-          globOptions: {
-            ignore: [
-              'index.html',
-            ]
-          }
-        },
-      ],
-    }),
+    // new CopyPlugin({
+    //   patterns: [
+    //     {
+    //       context: resolve(PROJECT_PATH, './public'),
+    //       from: '*',
+    //       to: resolve(PROJECT_PATH, './dist'),
+    //       toType: 'dir',
+    //     },
+    //   ],
+    // }),
     new WebpackBar({
       name: isDev ? '正在启动' : '正在打包',
       color: '#fa8c16',
