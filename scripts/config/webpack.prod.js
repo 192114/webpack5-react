@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const { merge } = require('webpack-merge')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const { resolve } = require('path')
+const path = require('path')
 const glob = require('glob')
 const PurgeCSSPlugin = require('purgecss-webpack-plugin') // 去除无用的css
 const { PROJECT_PATH } = require('../baseConfig')
@@ -13,8 +13,8 @@ module.exports = merge(common, {
   plugins: [
     new CleanWebpackPlugin(),
     new PurgeCSSPlugin({
-      paths: glob.sync(`${resolve(PROJECT_PATH, './src')}/**/*.{tsx,scss,less,css}`, { nodir: true }),
-      whitelist: ['html', 'body']
+      paths: glob.sync(`${path.resolve(PROJECT_PATH, './src')}/**/*.{tsx,scss,less,css}`, { nodir: true }),
+      whitelist: ['html', 'body'],
     }),
     // 添加包注释
     new webpack.BannerPlugin({

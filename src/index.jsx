@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom'
 
 import './index.css'
 
-ReactDOM.render(
-  <div className="container">hello world</div>,
-  document.querySelector('#root')
-)
+const title = {
+  en: 'Hello world',
+  cn: '你好，世界！',
+}
+
+ReactDOM.render(<div className="container">{title.cn}</div>, document.querySelector('#root'))

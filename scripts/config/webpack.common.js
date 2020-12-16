@@ -1,11 +1,11 @@
 const webpack = require('webpack')
-const { resolve } = require('path')
+const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 单独打包css
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin') // 压缩css
 const WebpackBar = require('webpackbar') // 打包进度
 const CopyPlugin = require('copy-webpack-plugin') // 复制资源
-const TerserPlugin = require("terser-webpack-plugin")
+const TerserPlugin = require('terser-webpack-plugin') // js压缩
 
 const { PROJECT_PATH, isDev } = require('../baseConfig')
 
@@ -25,8 +25,6 @@ const getCssLoaders = (importLoaders) => [
       postcssOptions: {
         ident: 'postcss',
         plugins: [
-          // 修复一些和 flex 布局相关的 bug
-          require('postcss-flexbugs-fixes'),
           require('postcss-preset-env')({
             autoprefixer: {
               grid: true,
@@ -42,15 +40,13 @@ const getCssLoaders = (importLoaders) => [
   },
 ]
 
-const getPluginsByIsDev = () => {
-  return isDev ? [] : [
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash:8].css',
-      chunkFilename: 'css/[name].[contenthash:8].css',
-      ignoreOrder: false,
-    })
-  ]
-}
+const getPluginsByIsDev = () => (isDev ? [] : [
+  new MiniCssExtractPlugin({
+    filename: 'css/[name].[contenthash:8].css',
+    chunkFilename: 'css/[name].[contenthash:8].css',
+    ignoreOrder: false,
+  }),
+])
 
 module.exports = {
   stats: isDev ? 'errors-only' : 'normal', // https://webpack.js.org/configuration/stats/ 打包的一些信息
@@ -61,19 +57,19 @@ module.exports = {
     level: 'warn',
   },
   entry: {
-    app: resolve(PROJECT_PATH, './src/index.jsx'),
+    app: path.resolve(PROJECT_PATH, './src/index.jsx'),
   },
   output: {
     filename: `js/[name]${isDev ? '' : '.[contenthash:8]'}.js`,
-    path: resolve(PROJECT_PATH, './dist'),
+    path: path.resolve(PROJECT_PATH, './dist'),
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.json'],
     alias: {
-      'Src': resolve(PROJECT_PATH, './src'),
-      'Components': resolve(PROJECT_PATH, './src/components'),
-      'Utils': resolve(PROJECT_PATH, './src/utils'),
-    }
+      Src: path.resolve(PROJECT_PATH, './src'),
+      Components: path.resolve(PROJECT_PATH, './src/components'),
+      Utils: path.resolve(PROJECT_PATH, './src/utils'),
+    },
   },
   module: {
     rules: [
@@ -124,11 +120,11 @@ module.exports = {
           },
         ],
       },
-    ]
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: resolve(PROJECT_PATH, './templates/index.html'),
+      template: path.resolve(PROJECT_PATH, './templates/index.html'),
       filename: 'index.html',
       cache: false, // 特别重要：防止之后使用v6版本 copy-webpack-plugin 时代码修改一刷新页面为空问题。
       inject: 'body',
@@ -152,16 +148,16 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          context: resolve(PROJECT_PATH, './public'),
+          context: path.resolve(PROJECT_PATH, './public'),
           from: '*',
-          to: resolve(PROJECT_PATH, './dist'),
+          to: path.resolve(PROJECT_PATH, './dist'),
           toType: 'dir',
         },
       ],
     }),
     new WebpackBar(),
     new webpack.ids.DeterministicModuleIdsPlugin({
-      maxLength: 5
+      maxLength: 5,
     }),
     ...getPluginsByIsDev(),
   ],
@@ -176,9 +172,9 @@ module.exports = {
         extractComments: false,
         terserOptions: {
           compress: { pure_funcs: ['console.log'] },
-        }
+        },
       }),
-      new CssMinimizerPlugin()
+      new CssMinimizerPlugin(),
     ] : [],
     moduleIds: false, // 配合 DeterministicModuleIdsPlugin 优化
     // webpack 官方推荐配置
@@ -187,23 +183,23 @@ module.exports = {
       minSize: 20000,
       cacheGroups: {
         defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
+          test: /[/\\]node_modules[/\\]/,
           priority: -10,
-          reuseExistingChunk: true
+          reuseExistingChunk: true,
         },
         default: {
           minChunks: 2,
           priority: -20,
-          reuseExistingChunk: true
+          reuseExistingChunk: true,
         },
         styles: {
           name: 'styles',
           test: /\.css$/,
           chunks: 'all',
           enforce: true,
-          priority: 20, 
-        }
-      }
-    }
-  }
+          priority: 20,
+        },
+      },
+    },
+  },
 }
