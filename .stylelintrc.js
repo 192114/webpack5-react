@@ -8,7 +8,12 @@ module.exports = {
     'function-name-case': 'lower',
     'no-descending-specificity': null,
     'no-invalid-double-slash-comments': null,
-    'rule-empty-line-before': 'always',
+    'rule-empty-line-before': [
+      'always',
+      {
+        ignore: ['after-comment', 'first-nested'],
+      },
+    ],
   },
   ignoreFiles: ['node_modules/**/*', 'dist/**/*'],
 }
