@@ -1,3 +1,6 @@
 .container {
-  width: 100px;
+  width: 100vw;
+  height: 600px;
+  color: #fff;
+  background-image: url(./assets/images/1_h8d-4wYLN9wwiEsLAA_5yg.jpeg);
 }

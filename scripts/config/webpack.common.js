@@ -42,8 +42,8 @@ const getCssLoaders = (importLoaders) => [
 
 const getPluginsByIsDev = () => (isDev ? [] : [
   new MiniCssExtractPlugin({
-    filename: 'css/[name].[contenthash:8].css',
-    chunkFilename: 'css/[name].[contenthash:8].css',
+    filename: 'css/[name].[contenthash].css',
+    chunkFilename: 'css/[name].[contenthash].css',
     ignoreOrder: false,
   }),
 ])
@@ -60,7 +60,7 @@ module.exports = {
     app: path.resolve(PROJECT_PATH, './src/index.jsx'),
   },
   output: {
-    filename: `js/[name]${isDev ? '' : '.[contenthash:8]'}.js`,
+    filename: `js/[name]${isDev ? '' : '.[contenthash]'}.js`,
     path: path.resolve(PROJECT_PATH, './dist'),
   },
   resolve: {
@@ -102,8 +102,9 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 10 * 1024,
-              name: '[name].[contenthash:8].[ext]',
+              name: '[name].[contenthash].[ext]',
               outputPath: 'assets/images',
+              publicPath: '../assets/images',
             },
           },
         ],
@@ -114,8 +115,9 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              name: '[name].[contenthash:8].[ext]',
+              name: '[name].[contenthash].[ext]',
               outputPath: 'assets/fonts',
+              publicPath: '../assets/fonts',
             },
           },
         ],

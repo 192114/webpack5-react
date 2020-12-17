@@ -13,8 +13,7 @@ module.exports = merge(common, {
   plugins: [
     new CleanWebpackPlugin(),
     new PurgeCSSPlugin({
-      paths: glob.sync(`${path.resolve(PROJECT_PATH, './src')}/**/*.{tsx,scss,less,css}`, { nodir: true }),
-      whitelist: ['html', 'body'],
+      paths: glob.sync(`${path.resolve(PROJECT_PATH, './src')}/**/*`, { nodir: true }),
     }),
     // 添加包注释
     new webpack.BannerPlugin({
