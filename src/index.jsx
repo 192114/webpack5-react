@@ -10,4 +10,8 @@ const title = {
   kn: 'jjjjj',
 }
 
+if (module && module.hot) {
+  module.hot.accept()
+}
+
 ReactDOM.render(<div className="container">{title.kn}</div>, document.querySelector('#root'))
